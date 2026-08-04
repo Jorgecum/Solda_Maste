@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+  <persistence-unit name="com.soldaMaster_solda_jar_0.0.1-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.soldaMaster.solda.entity.Lotes</class>
+    <class>com.soldaMaster.solda.entity.DetalleNotaCredito</class>
+    <class>com.soldaMaster.solda.entity.TiposMovimiento</class>
+    <class>com.soldaMaster.solda.entity.DetallePagos</class>
+    <class>com.soldaMaster.solda.entity.Compras</class>
+    <class>com.soldaMaster.solda.entity.OrdenesCompra</class>
+    <class>com.soldaMaster.solda.entity.Roles</class>
+    <class>com.soldaMaster.solda.entity.Pagos</class>
+    <class>com.soldaMaster.solda.entity.Ventas</class>
+    <class>com.soldaMaster.solda.entity.EstadosSistema</class>
+    <class>com.soldaMaster.solda.entity.MetodosPago</class>
+    <class>com.soldaMaster.solda.entity.DetalleOrden</class>
+    <class>com.soldaMaster.solda.entity.Cuotas</class>
+    <class>com.soldaMaster.solda.entity.Certificados</class>
+    <class>com.soldaMaster.solda.entity.Usuarios</class>
+    <class>com.soldaMaster.solda.entity.Categorias</class>
+    <class>com.soldaMaster.solda.entity.Productos</class>
+    <class>com.soldaMaster.solda.entity.Entidades</class>
+    <class>com.soldaMaster.solda.entity.DetalleVentas</class>
+    <class>com.soldaMaster.solda.entity.DetalleCompras</class>
+    <class>com.soldaMaster.solda.entity.MovimientosInventario</class>
+    <class>com.soldaMaster.solda.entity.NotasCredito</class>
+    <class>com.soldaMaster.solda.entity.ProductosRelacionados</class>
+    <class>com.soldaMaster.solda.entity.TiposEntidad</class>
+    <class>com.soldaMaster.solda.entity.Medidas</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/smaster_bd"/>
+      <property name="javax.persistence.jdbc.user" value="postgres"/>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="admin123"/>
+    </properties>
+  </persistence-unit>
+</persistence>
