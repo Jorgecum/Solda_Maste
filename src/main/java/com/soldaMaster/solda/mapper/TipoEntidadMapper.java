@@ -20,7 +20,7 @@ public abstract class TipoEntidadMapper {
     public abstract TiposEntidad toEntity(TipoEntidadRequest request);
 
     public abstract TipoEntidadResponse toResponse(TiposEntidad tipoEntidad);
-
+    
     public TiposEntidad map(Integer idTipoEntidad) {
         return tipoEntidadRepository.findById(idTipoEntidad).orElseThrow(()
             -> new RecursoNoEncontradoException(idTipoEntidad + " id Tipo Entidad no encontrado"));

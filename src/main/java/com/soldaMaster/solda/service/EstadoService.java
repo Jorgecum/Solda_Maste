@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.soldaMaster.solda.dto.EstadoRequest;
 import com.soldaMaster.solda.dto.EstadoResponse;
 import com.soldaMaster.solda.entity.EstadosSistema;
+import com.soldaMaster.solda.exception.RecursoNoEncontradoException;
 import com.soldaMaster.solda.mapper.EstadoMapper;
 import com.soldaMaster.solda.repository.EstadoRepository;
 
@@ -27,7 +28,9 @@ public class EstadoService {
     }
 
     public EstadoResponse obtenerPorId(Integer id) {
-        EstadosSistema estado = mapper.map(id);
+        EstadosSistema estado = repository.findById(id).orElseThrow(()
+            -> new RecursoNoEncontradoException(id + " id Estado no encontrado"));
+
         return mapper.toResponse(estado);
     }
 
@@ -38,17 +41,21 @@ public class EstadoService {
     }
 
     public EstadoResponse actualizar(Integer id, EstadoRequest request) {
-        EstadosSistema estado = mapper.map(id);
+        EstadosSistema estado = repository.findById(id).orElseThrow(()
+            -> new RecursoNoEncontradoException(id + " id Estado no encontrado"));
 
-        estado.setTipoCodigo(request.getTipoCodigo());
-        estado.setNombre(request.getNombre());
+        mapper.actualizarEstado(estado, request);
 
         estado = repository.save(estado);
+
         return mapper.toResponse(estado);
+
     }
 
     public void eliminar(Integer id) {
-        EstadosSistema estado = mapper.map(id);
-        repository.delete(estado);
+        repository.findById(id).orElseThrow(()
+            -> new RecursoNoEncontradoException(id + " id Estado no encontrado"));
+
+        repository.deleteById(id);
     }
 }

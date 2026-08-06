@@ -15,6 +15,6 @@ public class UsuarioResponse {
     private String password;
     private EntidadResponse idEntidad;
     private EstadoResponse idEstado;
-    private Roles idRol;
+    private Roles idRol;    
 
 }
