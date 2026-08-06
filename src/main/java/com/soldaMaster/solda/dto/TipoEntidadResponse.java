@@ -7,8 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class EstadoResponse {
-    private Integer idEstado;
-    private String tipoCodigo;
+public class TipoEntidadResponse {
+    private Integer idTipoEntidad;
     private String nombre;
 }
