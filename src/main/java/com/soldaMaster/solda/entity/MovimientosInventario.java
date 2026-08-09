@@ -31,7 +31,7 @@ public class MovimientosInventario {
     private int cantidad;
 
     @Column(name = "fecha")
-    private LocalDateTime fecha;
+    private LocalDateTime fecha = LocalDateTime.now();
 
     @Size(max = 100)
     @Column(name = "referencia", length = 100)

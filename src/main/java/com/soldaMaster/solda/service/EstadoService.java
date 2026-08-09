@@ -1,5 +1,6 @@
 package com.soldaMaster.solda.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -50,6 +51,18 @@ public class EstadoService {
 
         return mapper.toResponse(estado);
 
+    }
+
+    public List<EstadoResponse> estadosCodigo(String codigo){
+        List<EstadosSistema> estados = repository.findByTipoCodigo(codigo);
+        List<EstadoResponse> listaEstados = new ArrayList<>();
+
+        for(EstadosSistema estado : estados){
+            EstadoResponse agregar = mapper.toResponse(estado);
+            listaEstados.add(agregar);
+        }
+
+        return listaEstados;
     }
 
     public void eliminar(Integer id) {
