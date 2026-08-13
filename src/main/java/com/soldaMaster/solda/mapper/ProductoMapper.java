@@ -30,6 +30,7 @@ public abstract class ProductoMapper {
     public abstract Productos toEntity (ProductoRequest request);
 
     public abstract ProductoResponse toResponse(Productos producto);
+    
 
     @InheritConfiguration(name = "toEntity")
     public abstract void actualizarProducto(@MappingTarget Productos actualizar, ProductoRequest datos);

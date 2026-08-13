@@ -32,13 +32,14 @@ public class ProductoRequest {
     private BigDecimal precioMayorista;
     @DecimalMin(value = "0.0", message = "El precio distribuidor no puede ser negativo")
     private BigDecimal precioDistribuidor;
-    @NotBlank(message = "El codigo de barras es obligatorio")
+    @NotBlank(message = "El código único es obligatorio")
     @Size(max = 10, message = "El código único no puede superar 10 caracteres")
     private String codigoUnico;
-    @NotNull(message = "La categoria es obligatoria")
-    private Integer idCategoria;
+    
+    private String idCategoria;
+    
     @NotNull(message = "El estado es obligatorio")
     private Integer idEstado;
-    @NotNull(message = "La medida es obligatoria")
-    private Integer idUnidadMedida;
+
+    private String idUnidadMedida;
 }

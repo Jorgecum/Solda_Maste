@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.soldaMaster.solda.dto.CertificadoRequest;
 import com.soldaMaster.solda.dto.CertificadoResponse;
 import com.soldaMaster.solda.entity.Certificados;
+import com.soldaMaster.solda.exception.RecursoNoEncontradoException;
 import com.soldaMaster.solda.mapper.CertificadoMapper;
 import com.soldaMaster.solda.repository.CertificadoRepository;
 
@@ -21,5 +22,10 @@ public class CertificadoService {
         Certificados ingresar = mapper.toEntity(request);
         ingresar = repository.save(ingresar);
         return mapper.toResponse(ingresar);
+    }
+
+    public Certificados obtenerCertificado (Integer id){
+        return repository.findById(id)
+            .orElseThrow(()-> new RecursoNoEncontradoException(id + " Certificado no encontrado"));
     }
 }

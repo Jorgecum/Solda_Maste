@@ -58,5 +58,27 @@ public class ProductoService {
         return mapper.toResponse(encontrado);
     }
 
+    public void actualizarStock(Integer idProducto, int idTipoMovimiento, int cantidad ){
+        Productos encontrado = repository.findById(idProducto)
+            .orElseThrow(()-> new RecursoNoEncontradoException(idProducto+ " Producto no encontrado"));
+
+        if(idTipoMovimiento == 1){
+            cantidad = encontrado.getStock() + cantidad;
+        }else{
+            
+            if(cantidad < encontrado.getStock()){
+                throw new IllegalArgumentException(
+                    "Stock insuficiente para realizar la salida"
+                );
+            }
+
+            cantidad = encontrado.getStock() - cantidad;
+        }
+
+        encontrado.setStock(cantidad);
+
+        repository.save(encontrado);
+    }
+
     
 }

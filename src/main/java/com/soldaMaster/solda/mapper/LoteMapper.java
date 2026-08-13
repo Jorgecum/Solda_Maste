@@ -1,5 +1,7 @@
 package com.soldaMaster.solda.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public abstract class LoteMapper {
 
     public abstract LoteResponse toResponse(Lotes lote);
 
+    public abstract List<LoteResponse> toResponseList(List<Lotes> lotes);
+    
     public Lotes map(Integer id){
         if(id == null){
             return null;

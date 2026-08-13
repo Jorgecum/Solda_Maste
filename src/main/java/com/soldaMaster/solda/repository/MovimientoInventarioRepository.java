@@ -8,7 +8,7 @@ import com.soldaMaster.solda.entity.MovimientosInventario;
 
 
 public interface MovimientoInventarioRepository extends JpaRepository<MovimientosInventario, Integer>{
-    List<MovimientosInventario> findByIdProducto(Integer idProducto);
-    List<MovimientosInventario> findByIdLote(Integer idLote);
+    List<MovimientosInventario> findByIdProducto_IdProducto(Integer idProducto);
+    List<MovimientosInventario> findByIdLote_IdLote(Integer idLote);
     
 }

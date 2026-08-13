@@ -9,9 +9,9 @@ import com.soldaMaster.solda.dto.LoteRequest;
 import com.soldaMaster.solda.dto.LoteResponse;
 import com.soldaMaster.solda.dto.MovimientoInventarioRequest;
 import com.soldaMaster.solda.dto.MovimientoInventarioResponse;
-import com.soldaMaster.solda.dto.ProductoRequest;
+import com.soldaMaster.solda.dto.ProductoInventarioRequest;
 import com.soldaMaster.solda.dto.ProductoResponse;
-
+import com.soldaMaster.solda.entity.Certificados;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,19 +25,21 @@ public class InventarioService {
     private final CertificadoService certificadoService;
     
     @Transactional
-    public MovimientoInventarioResponse ingresarProducto(ProductoRequest request, LoteRequest loteRequest, CertificadoRequest certificadoRequest ){
-        ProductoResponse ingresado = productoService.crearProducto(request);
+    public MovimientoInventarioResponse ingresarProducto(ProductoInventarioRequest request ){
+        ProductoResponse ingresado = productoService.crearProducto(request.getProducto());
         MovimientoInventarioRequest movimiento = new MovimientoInventarioRequest();
 
         if(ingresado.getManejaLote()){
 
-            if(certificadoRequest != null){
-                CertificadoResponse certificadoLote = certificadoService.crearCertificado(certificadoRequest);
-                loteRequest.setIdCertificado(certificadoLote.getIdCertificado());
+            LoteRequest lote = request.getLote();
+
+            if(request.getCertificado() != null){
+                CertificadoResponse certificadoLote = certificadoService.crearCertificado(request.getCertificado());
+                lote.setIdCertificado(certificadoLote.getIdCertificado());
             }
 
-            loteRequest.setIdProducto(ingresado.getIdProducto());
-            LoteResponse loteProducto = loteService.crearLote(loteRequest);
+            lote.setIdProducto(ingresado.getIdProducto());
+            LoteResponse loteProducto = loteService.crearLote(lote);
 
             movimiento.setCantidad(loteProducto.getStockLote());
             movimiento.setReferencia("Saldo Inicial");
@@ -57,6 +59,34 @@ public class InventarioService {
         }
 
         return movimientoService.crearMovimiento(movimiento);
+
+    }
+
+    @Transactional
+    public MovimientoInventarioResponse ingresarLote(LoteRequest request){
+        LoteResponse lote = loteService.crearLote(request);
+
+        Integer producto = lote.getIdProducto().getIdProducto();
+        int stockIngreso = lote.getStockLote();
+
+        productoService.actualizarStock(producto, 1, stockIngreso);
+
+        MovimientoInventarioRequest movimientoLote = new MovimientoInventarioRequest();
+        movimientoLote.setCantidad(stockIngreso);
+        movimientoLote.setFecha(lote.getFechaEntrada());
+        movimientoLote.setReferencia("Ingreso manual");
+        movimientoLote.setIdLote(lote.getIdLote());
+        movimientoLote.setIdProducto(producto);
+        movimientoLote.setIdTipoMovimiento(1);
+
+        return movimientoService.crearMovimiento(movimientoLote); 
+    }
+
+    @Transactional
+    public LoteResponse subirCertificado(Integer idLote, CertificadoRequest request){
+        CertificadoResponse certificadoIngresado = certificadoService.crearCertificado(request);
+
+        return loteService.subirCertificado(idLote, certificadoIngresado.getIdCertificado());
 
     }
 }

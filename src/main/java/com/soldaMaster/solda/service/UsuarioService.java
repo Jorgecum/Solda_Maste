@@ -43,7 +43,7 @@ public class UsuarioService {
 
         String nombreRol = encontrado.getIdRol().getNombre();
 
-        return new LoginResponse(entidadInfo, nombreRol);
+        return new LoginResponse(encontrado.getIdUsuario(),entidadInfo, nombreRol);
         
     }
 

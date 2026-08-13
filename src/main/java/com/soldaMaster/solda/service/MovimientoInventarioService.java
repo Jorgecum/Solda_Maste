@@ -28,11 +28,11 @@ public class MovimientoInventarioService {
         return mapper.toResponseList(repository.findAll());
     }
     
-    public List<MovimientoInventarioResponse> productoCardex(Integer id){
-        return mapper.toResponseList(repository.findByIdProducto(id));
+    public List<MovimientoInventarioResponse> productoKardex(Integer id){
+        return mapper.toResponseList(repository.findByIdProducto_IdProducto(id));
     }
 
-    public List<MovimientoInventarioResponse> loteCardex(Integer id){
-        return mapper.toResponseList(repository.findByIdLote(id));
+    public List<MovimientoInventarioResponse> loteKardex(Integer id){
+        return mapper.toResponseList(repository.findByIdLote_IdLote(id));
     }
 }
