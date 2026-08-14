@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.soldaMaster.solda.dto.LoteResponse;
-import com.soldaMaster.solda.dto.MovimientoInventarioResponse;
-import com.soldaMaster.solda.service.LoteService;
-import com.soldaMaster.solda.service.MovimientoInventarioService;
 
+import com.soldaMaster.solda.dto.MovimientoInventarioResponse;
+import com.soldaMaster.solda.service.MovimientoInventarioService;
 import lombok.RequiredArgsConstructor;
 
 @RestController

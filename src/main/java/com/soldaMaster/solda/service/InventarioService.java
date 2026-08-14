@@ -11,7 +11,7 @@ import com.soldaMaster.solda.dto.MovimientoInventarioRequest;
 import com.soldaMaster.solda.dto.MovimientoInventarioResponse;
 import com.soldaMaster.solda.dto.ProductoInventarioRequest;
 import com.soldaMaster.solda.dto.ProductoResponse;
-import com.soldaMaster.solda.entity.Certificados;
+
 
 import lombok.RequiredArgsConstructor;
 

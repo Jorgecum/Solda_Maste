@@ -17,6 +17,7 @@ public abstract class TipoEntidadMapper {
     protected TipoEntidadRepository tipoEntidadRepository;
 
     @Mapping(target = "idTipoEntidad", ignore = true)
+    @Mapping(target = "entidadesList", ignore = true)
     public abstract TiposEntidad toEntity(TipoEntidadRequest request);
 
     public abstract TipoEntidadResponse toResponse(TiposEntidad tipoEntidad);
