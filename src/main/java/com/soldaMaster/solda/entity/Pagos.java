@@ -37,7 +37,7 @@ public class Pagos {
     private BigDecimal montoTotal;
 
     @Column(name = "fecha")
-    private LocalDateTime fecha;
+    private LocalDateTime fecha = LocalDateTime.now();
 
     @Size(max = 100)
     @Column(name = "referencia_pago", length = 100)

@@ -27,7 +27,7 @@ public class InventarioController {
     }
     
     @PostMapping("/lote")
-    public MovimientoInventarioResponse ingresarLote(@RequestBody LoteRequest request){
+    public LoteResponse ingresarLote(@RequestBody LoteRequest request){
         return service.ingresarLote(request);
     }
 

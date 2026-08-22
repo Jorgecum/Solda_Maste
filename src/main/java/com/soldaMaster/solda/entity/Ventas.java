@@ -44,7 +44,7 @@ public class Ventas {
     private String tipoComprobante;
 
     @Column(name = "fecha_emision")
-    private LocalDateTime fechaEmision;
+    private LocalDateTime fechaEmision = LocalDateTime.now();
 
     @Column(name = "total")
     private BigDecimal total;

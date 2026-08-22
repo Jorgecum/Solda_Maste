@@ -1,6 +1,5 @@
 package com.soldaMaster.solda.dto;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,12 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UsuarioResponse {
-    private Integer idUsuario;
+public class UsuarioRequest {
     private String usuario;
     private String password;
-    private EntidadResponse idEntidad;
-    private EstadoResponse idEstado;
-    private RolResponse idRol;    
-
+    private Integer idEntidad;
+    private Integer idEstado;
+    private Integer idRol; 
 }

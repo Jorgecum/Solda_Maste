@@ -11,6 +11,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,7 +33,8 @@ public class MovimientosInventario {
     @Column(name = "cantidad", nullable = false)
     private int cantidad;
 
-    @Column(name = "fecha")
+    @CreationTimestamp
+    @Column(name = "fecha", updatable = false)
     private LocalDateTime fecha = LocalDateTime.now();
 
     @Size(max = 100)

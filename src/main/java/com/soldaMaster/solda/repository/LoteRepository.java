@@ -8,4 +8,5 @@ import com.soldaMaster.solda.entity.Lotes;
 
 public interface LoteRepository extends JpaRepository<Lotes, Integer>{
     List<Lotes> findByIdProducto_IdProducto(Integer idProducto);
+    List<Lotes> findByIdProducto_IdProductoOrderByFechaEntradaAsc(Integer idProducto);
 }

@@ -1,0 +1,35 @@
+package com.soldaMaster.solda.controller;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.soldaMaster.solda.dto.MetodoPagoResponse;
+import com.soldaMaster.solda.dto.VentaRequest;
+import com.soldaMaster.solda.dto.VentaResponse;
+import com.soldaMaster.solda.service.MetodoPagoService;
+import com.soldaMaster.solda.service.VentaService;
+
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("/venta")
+@RequiredArgsConstructor
+public class VentaController {
+    private final VentaService service;
+    private final MetodoPagoService mPagoService;
+
+    @PostMapping
+    public VentaResponse crearVenta(@RequestBody VentaRequest request){
+        return service.crearVenta(request);
+    }
+
+    @GetMapping("/metodo-pago")
+    public List<MetodoPagoResponse> listarMetodosPago(){
+        return mPagoService.listarMetodosPago();
+    }
+}

@@ -3,6 +3,7 @@ package com.soldaMaster.solda.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.soldaMaster.solda.dto.ActualizarStockRequest;
 import com.soldaMaster.solda.dto.CertificadoRequest;
 import com.soldaMaster.solda.dto.CertificadoResponse;
 import com.soldaMaster.solda.dto.LoteRequest;
@@ -63,23 +64,21 @@ public class InventarioService {
     }
 
     @Transactional
-    public MovimientoInventarioResponse ingresarLote(LoteRequest request){
+    public LoteResponse ingresarLote(LoteRequest request){
         LoteResponse lote = loteService.crearLote(request);
 
         Integer producto = lote.getIdProducto().getIdProducto();
         int stockIngreso = lote.getStockLote();
 
-        productoService.actualizarStock(producto, 1, stockIngreso);
+        ActualizarStockRequest datosStock = new ActualizarStockRequest();
+        datosStock.setIdProducto(producto);
+        datosStock.setCantidad(stockIngreso);
+        datosStock.setIdLote(lote.getIdLote());
+        datosStock.setIdTipoMovimiento(1);
+        datosStock.setReferencia("Ingreso Manual");
 
-        MovimientoInventarioRequest movimientoLote = new MovimientoInventarioRequest();
-        movimientoLote.setCantidad(stockIngreso);
-        movimientoLote.setFecha(lote.getFechaEntrada());
-        movimientoLote.setReferencia("Ingreso manual");
-        movimientoLote.setIdLote(lote.getIdLote());
-        movimientoLote.setIdProducto(producto);
-        movimientoLote.setIdTipoMovimiento(1);
-
-        return movimientoService.crearMovimiento(movimientoLote); 
+        productoService.actualizarStock(datosStock);
+        return lote;
     }
 
     @Transactional
