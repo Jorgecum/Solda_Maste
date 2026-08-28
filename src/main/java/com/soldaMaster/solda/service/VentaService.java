@@ -1,15 +1,19 @@
 package com.soldaMaster.solda.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.soldaMaster.solda.dto.CuotaRequest;
+import com.soldaMaster.solda.dto.CuotaResponse;
 import com.soldaMaster.solda.dto.DetalleVentaRequest;
 import com.soldaMaster.solda.dto.PagoRequest;
+import com.soldaMaster.solda.dto.VentaCreditoResponse;
 import com.soldaMaster.solda.dto.VentaRequest;
 import com.soldaMaster.solda.dto.VentaResponse;
+import com.soldaMaster.solda.entity.EstadosSistema;
 import com.soldaMaster.solda.entity.Ventas;
 import com.soldaMaster.solda.mapper.VentaMapper;
 import com.soldaMaster.solda.repository.VentaRepository;
@@ -35,6 +39,18 @@ public class VentaService {
         request.setSerieCorrelativa(serie);
         
         Ventas ingresado = mapper.toEntity(request);
+
+        BigDecimal totalPagos = pService.sumarPago(request.getPagosList());
+
+        if (totalPagos.compareTo(request.getTotal()) >= 0) {
+            EstadosSistema estadoContado = new EstadosSistema();
+            estadoContado.setIdEstado(8); 
+            ingresado.setIdEstadoVenta(estadoContado);
+        } else {
+            EstadosSistema estadoCredito = new EstadosSistema();
+            estadoCredito.setIdEstado(6); 
+            ingresado.setIdEstadoVenta(estadoCredito);
+        }
 
         ingresado = repository.save(ingresado);
 
@@ -148,4 +164,59 @@ public class VentaService {
 
         return prefijo + String.format("%06d", ultimoNumero + 1);
     }
+
+    public List<VentaCreditoResponse> ventasCredito(){
+        List<Ventas> ventas = repository.findAll();
+        List<VentaCreditoResponse> listaVentas = new ArrayList<>();
+
+        List<VentaResponse> todasLasVentas = mapper.toResponseList(ventas);
+        for(VentaResponse venta : todasLasVentas){
+            List<CuotaResponse> listaCuotas =cService.cuotasDVenta(venta.getIdVenta());
+            
+            if (listaCuotas == null || listaCuotas.isEmpty()) {
+                continue; 
+            }
+
+            BigDecimal montoPagado = BigDecimal.ZERO;
+            BigDecimal montoTotalDeuda = BigDecimal.ZERO;
+
+            for (CuotaResponse cuota : listaCuotas) {
+                montoTotalDeuda = montoTotalDeuda.add(cuota.getMonto());
+
+                if (cuota.getMontoPagado() != null) {
+                    montoPagado = montoPagado.add(cuota.getMontoPagado());
+                }
+
+            }
+
+            BigDecimal montoPendiente = montoTotalDeuda.subtract(montoPagado);
+
+            String estadoCalculado;
+            if (montoPendiente.compareTo(BigDecimal.ZERO) <= 0) {
+                estadoCalculado = "Cancelada";
+            } else if (montoPagado.compareTo(BigDecimal.ZERO) > 0) {
+                estadoCalculado = "Parcial";
+            } else {
+                estadoCalculado = "Pendiente";
+            }
+
+            VentaCreditoResponse ventaCredito = new VentaCreditoResponse();
+
+            ventaCredito.setEstado(estadoCalculado);
+            ventaCredito.setCliente(venta.getIdCliente());
+            ventaCredito.setIdVenta(venta.getIdVenta());
+            ventaCredito.setSerieCorrelativa(venta.getSerieCorrelativa());
+            ventaCredito.setTotal(montoTotalDeuda);
+            ventaCredito.setTotalPendiente(montoPendiente);
+            
+            listaVentas.add(ventaCredito);
+        }
+
+        return listaVentas;
+    }
+
+    public List<VentaResponse> mostrarVentas(){
+        return mapper.toResponseList(repository.findAll());
+    }
+
 }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.soldaMaster.solda.dto.ActualizarStockRequest;
 import com.soldaMaster.solda.dto.MovimientoInventarioRequest;
-import com.soldaMaster.solda.dto.MovimientoInventarioResponse;
 import com.soldaMaster.solda.dto.ProductoRequest;
 import com.soldaMaster.solda.dto.ProductoResponse;
 import com.soldaMaster.solda.entity.Productos;

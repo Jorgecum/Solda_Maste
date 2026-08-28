@@ -16,5 +16,4 @@ public class PagoResponse {
     private String referenciaPago;
     private MetodoPagoResponse idMetodoPago;
     private VentaResponse idVenta;
-
 }

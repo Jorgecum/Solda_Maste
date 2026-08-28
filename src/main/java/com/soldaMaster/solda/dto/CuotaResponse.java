@@ -17,5 +17,7 @@ public class CuotaResponse {
     private BigDecimal monto;
     private EstadoResponse idEstadoCuota;
     private VentaResponse idVenta;
+    private BigDecimal montoPagado;
+    private BigDecimal montoPendiente;
 
 }

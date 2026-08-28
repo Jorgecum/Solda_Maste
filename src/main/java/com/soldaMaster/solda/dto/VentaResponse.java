@@ -15,6 +15,7 @@ public class VentaResponse {
     private Integer idVentaOrigen;
     private String tipoComprobante;
     private LocalDateTime fechaEmision;
+    private String serieCorrelativa;
     private BigDecimal total;
     private BigDecimal subtotal;
     private BigDecimal descuentoGlobal;

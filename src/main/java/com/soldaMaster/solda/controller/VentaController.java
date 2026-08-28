@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soldaMaster.solda.dto.MetodoPagoResponse;
+import com.soldaMaster.solda.dto.VentaCreditoResponse;
 import com.soldaMaster.solda.dto.VentaRequest;
 import com.soldaMaster.solda.dto.VentaResponse;
 import com.soldaMaster.solda.service.MetodoPagoService;
@@ -31,5 +32,15 @@ public class VentaController {
     @GetMapping("/metodo-pago")
     public List<MetodoPagoResponse> listarMetodosPago(){
         return mPagoService.listarMetodosPago();
+    }
+
+    @GetMapping("/credito")
+    public List<VentaCreditoResponse> listaVentasCredito(){
+        return service.ventasCredito();
+    }
+
+    @GetMapping()
+    public List<VentaResponse> mostrarVentas(){
+        return service.mostrarVentas();
     }
 }

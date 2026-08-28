@@ -1,5 +1,7 @@
 package com.soldaMaster.solda.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public abstract class VentaMapper {
     public abstract Ventas toEntity (VentaRequest request);
 
     public abstract VentaResponse toResponse(Ventas venta);
+
+    public abstract List<VentaResponse> toResponseList(List<Ventas> listaVentas);
 
     public Ventas map(Integer id){
         return repository.findById(id).orElseThrow(()
