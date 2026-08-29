@@ -35,6 +35,11 @@ public class EstadoService {
         return mapper.toResponse(estado);
     }
 
+    public EstadosSistema obtenerPorIdSistema(Integer id) {
+        return repository.findById(id).orElseThrow(()
+            -> new RecursoNoEncontradoException(id + " id Estado no encontrado"));
+    }
+
     public EstadoResponse crear(EstadoRequest request) {
         EstadosSistema estado = mapper.toEntity(request);
         estado = repository.save(estado);
