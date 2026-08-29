@@ -22,6 +22,7 @@ public abstract class VentaMapper {
     @Mapping(target = "pagosList", ignore = true)
     @Mapping(target = "notasCreditoList", ignore = true)
     @Mapping(target = "detalleVentasList", ignore = true)
+    @Mapping(target = "fechaEmision", ignore = true)
     public abstract Ventas toEntity (VentaRequest request);
 
     public abstract VentaResponse toResponse(Ventas venta);

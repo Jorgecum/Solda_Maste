@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.soldaMaster.solda.dto.CuotaRequest;
 import com.soldaMaster.solda.dto.CuotaResponse;
-import com.soldaMaster.solda.dto.DetallePagoResponse;
 import com.soldaMaster.solda.entity.Cuotas;
 import com.soldaMaster.solda.entity.DetallePagos;
 import com.soldaMaster.solda.entity.EstadosSistema;

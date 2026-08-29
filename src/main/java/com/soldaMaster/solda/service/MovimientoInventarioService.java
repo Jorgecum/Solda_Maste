@@ -1,6 +1,7 @@
 package com.soldaMaster.solda.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,12 @@ public class MovimientoInventarioService {
     }
 
     public List<MovimientoInventarioResponse> cardexGlobal(){
-        return mapper.toResponseList(repository.findAll());
+        List<MovimientosInventario> movimientos = repository.findTop100ByOrderByFechaDesc();        
+        List<MovimientosInventario> filtrados = movimientos.stream()
+            .filter(m -> m.getFecha() != null)
+            .collect(Collectors.toList());
+
+        return mapper.toResponseList(filtrados);
     }
     
     public List<MovimientoInventarioResponse> productoKardex(Integer id){

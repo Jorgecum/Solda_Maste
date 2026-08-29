@@ -23,6 +23,9 @@ public class MovimientoController {
         return service.productoKardex(id);
     }
 
-    
+    @GetMapping("/global")
+    public List<MovimientoInventarioResponse> kardexGlobal(){
+        return service.cardexGlobal();
+    }
 
 }
