@@ -3,6 +3,10 @@ package com.soldaMaster.solda.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,8 +41,11 @@ public class OrdenCompraService {
 
     }
 
-    public List<OrdenCompraResponse> obtenerOrdenes(){
-        return mapper.toResponseList(repository.findAll());
+    public Page<OrdenCompraResponse> listarOrdenesPag(int page, int size, String busqueda){
+        Pageable pageable = PageRequest.of(page, size, Sort.by("idOrden").descending());
+        Page<OrdenesCompra> paginas = repository.buscarOrdenesPaginadas(busqueda, pageable);
+
+        return paginas.map(orden -> mapper.toResponse(orden));
     }
 
     public OrdenCompraResponse obtenerOrdenCompra(Integer idOrden){
@@ -69,5 +76,16 @@ public class OrdenCompraService {
     public List<OrdenCompraResponse> ordenesPendientes(){
         List<OrdenesCompra> ordenesPendientes = repository.findByIdEstadoOrden_IdEstado(3);
         return mapper.toResponseList(ordenesPendientes);
+    }
+
+    public void aprobarOrden(Integer idOrden){
+        OrdenesCompra orden = repository.findById(idOrden)
+            .orElseThrow(()-> new RecursoNoEncontradoException(idOrden + " Orden no encotrada"));
+        
+        
+        EstadosSistema estadoAprobado = eService.obtenerPorIdSistema(23);
+        orden.setIdEstadoOrden(estadoAprobado);
+        orden = repository.save(orden);
+
     }
 }

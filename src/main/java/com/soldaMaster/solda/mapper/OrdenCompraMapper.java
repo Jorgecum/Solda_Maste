@@ -25,6 +25,9 @@ public abstract class OrdenCompraMapper {
     public abstract List<OrdenCompraResponse> toResponseList(List<OrdenesCompra> listaOrdenes);
 
     public OrdenesCompra map(Integer idOrden){
+        if (idOrden == null) {
+            return null;
+        }
         return repository.findById(idOrden)
             .orElseThrow(()-> new RecursoNoEncontradoException(idOrden + " Orden no encontrada"));
     }

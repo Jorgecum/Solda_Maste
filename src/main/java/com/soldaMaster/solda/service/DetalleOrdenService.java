@@ -37,4 +37,5 @@ public class DetalleOrdenService {
         return mapper.toResponseList(repository.findByIdOrden_IdOrden(idOrden));
     }
 
+    
 }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soldaMaster.solda.dto.ActividadDTO;
+import com.soldaMaster.solda.dto.ResumenDashboardDTO;
 import com.soldaMaster.solda.service.DashboardService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,4 +22,9 @@ public class DashboardController {
     public List<ActividadDTO> obtenerActividad(){
         return dService.obtenerActividadReciente();
     }
+
+    @GetMapping("/resumen")
+    public ResumenDashboardDTO obtenerResumen(){
+        return dService.obtenerMetricasPrincipales();
+    }   
 }
