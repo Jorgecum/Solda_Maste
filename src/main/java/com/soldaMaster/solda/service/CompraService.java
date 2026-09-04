@@ -56,4 +56,14 @@ public class CompraService {
 
         return compraObtenida;
     }
+
+    public Page<CompraResponse> listarCompraProveedor(Integer idProveedor, int page, int size){
+        if (page < 0) page = 0;
+        Page<Compras> paginaCompra = repository.findByIdProveedor_IdEntidadOrderByFechaCompraDesc(
+                idProveedor, 
+                PageRequest.of(page, size)
+        );
+
+        return paginaCompra.map(mapper::toResponse);
+    }
 }

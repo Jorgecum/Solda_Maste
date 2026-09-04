@@ -1,6 +1,7 @@
 package com.soldaMaster.solda.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -77,5 +78,11 @@ public class DetallesVentaService {
         }
 
         return true;
+    }
+
+    public List<DetalleVentaResponse> obtenerDetalleVenta(Integer idVenta){
+        List<DetalleVentas> listaObtenida = repository.findByIdVenta_IdVenta(idVenta);
+
+        return mapper.toResponseList(listaObtenida);
     }
 }

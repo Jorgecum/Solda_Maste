@@ -2,10 +2,13 @@ package com.soldaMaster.solda.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soldaMaster.solda.dto.MetodoPagoResponse;
@@ -42,5 +45,19 @@ public class VentaController {
     @GetMapping()
     public List<VentaResponse> mostrarVentas(){
         return service.mostrarVentas();
+    }
+
+    @GetMapping("/{idVenta}")
+    public VentaResponse obtenerDetalleVenta(@PathVariable Integer idVenta){
+        return service.obtenerVentaConDetalle(idVenta);
+    }
+
+    @GetMapping("/cliente/{idCliente}")
+    public Page<VentaResponse> listarVentasPorCliente(
+            @PathVariable Integer idCliente,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+            
+        return service.listarVentaCliente(idCliente, page, size);
     }
 }

@@ -2,6 +2,8 @@ package com.soldaMaster.solda.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.soldaMaster.solda.dto.EntidadRequest;
@@ -28,6 +30,17 @@ public class EntidadService {
                 .stream()
                 .map(mapper::toResponse)
                 .toList();
+    }
+    
+    public Page<EntidadResponse> listarPaginado(int page, int size, String tipoEntidad, String tipoDocumento, String busqueda) {
+        if (page < 0) page = 0;
+
+        String tEntidad = (tipoEntidad != null && !tipoEntidad.equalsIgnoreCase("Todos") && !tipoEntidad.isEmpty()) ? tipoEntidad : null;
+        String tDoc = (tipoDocumento != null && !tipoDocumento.equalsIgnoreCase("Todos") && !tipoDocumento.isEmpty()) ? tipoDocumento : null;
+        String busq = (busqueda != null && !busqueda.trim().isEmpty()) ? busqueda.trim() : null;
+
+        Page<Entidades> pagina = repository.buscarEntidadesPaginadas(tEntidad, tDoc, busq, PageRequest.of(page, size));
+        return pagina.map(mapper::toResponse);
     }
 
     public EntidadResponse obtenerPorId(Integer id) {

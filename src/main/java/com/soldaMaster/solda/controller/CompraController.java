@@ -1,7 +1,5 @@
 package com.soldaMaster.solda.controller;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,5 +39,14 @@ public class CompraController {
             @RequestParam(required = false) String search
     ) {
         return service.listarComprasPaginadas(page, size, search);
+    }
+
+    @GetMapping("/proveedor/{idProveedor}")
+    public Page<CompraResponse> listarCompraProveedor(
+            @PathVariable Integer idProveedor,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+            
+        return service.listarCompraProveedor(idProveedor, page, size);
     }
 }

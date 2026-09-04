@@ -24,7 +24,7 @@ public class VentaRequest {
     private Integer idCliente;
     private Integer idEstadoVenta;
     private Integer idUsuario;
-    private List<DetalleVentaRequest>detalleVentasList;
+    private List<DetalleVentaRequest>detallesVentasList;
     private List<PagoRequest> pagosList;
     private List<CuotaRequest>cuotasList;
 }

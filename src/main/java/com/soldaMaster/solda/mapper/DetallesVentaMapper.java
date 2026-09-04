@@ -22,4 +22,6 @@ public abstract class DetallesVentaMapper {
     public abstract DetalleVentaResponse toResponse(DetalleVentas detalleVentas);
 
     public abstract List<DetalleVentas> toEntityList(List<DetalleVentaRequest> list);
+
+    public abstract List<DetalleVentaResponse> toResponseList(List<DetalleVentas> list);
 }

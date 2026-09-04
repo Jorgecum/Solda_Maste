@@ -3,6 +3,10 @@ package com.soldaMaster.solda.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.soldaMaster.solda.dto.ActualizarStockRequest;
@@ -105,6 +109,17 @@ public class ProductoService {
         }
         encontrado.setStock(cantidad);
         repository.save(encontrado);
+    }
+
+    public Page<ProductoResponse> listarPaginado(int page, int size, String busqueda, Integer idCategoria) {
+        
+        Pageable pageable = PageRequest.of(page, size, Sort.by("idProducto").descending());
+
+        String textoBusqueda = (busqueda != null && !busqueda.trim().isEmpty()) ? busqueda.trim() : null;
+
+        Page<Productos> productosPage = repository.listarPaginado(textoBusqueda, idCategoria, pageable);
+
+        return productosPage.map(mapper::toResponse);
     }
 
     

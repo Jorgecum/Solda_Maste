@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.soldaMaster.solda.dto.CuotaRequest;
@@ -13,8 +15,10 @@ import com.soldaMaster.solda.dto.PagoRequest;
 import com.soldaMaster.solda.dto.VentaCreditoResponse;
 import com.soldaMaster.solda.dto.VentaRequest;
 import com.soldaMaster.solda.dto.VentaResponse;
+import com.soldaMaster.solda.entity.Compras;
 import com.soldaMaster.solda.entity.EstadosSistema;
 import com.soldaMaster.solda.entity.Ventas;
+import com.soldaMaster.solda.exception.RecursoNoEncontradoException;
 import com.soldaMaster.solda.mapper.VentaMapper;
 import com.soldaMaster.solda.repository.VentaRepository;
 
@@ -58,7 +62,7 @@ public class VentaService {
 
         String referenciaV = ingresado.getTipoComprobante() + ": " + ingresado.getSerieCorrelativa();
         
-        List<DetalleVentaRequest> detalles = request.getDetalleVentasList();
+        List<DetalleVentaRequest> detalles = request.getDetallesVentasList();
 
         for(DetalleVentaRequest detalle : detalles){
 
@@ -99,7 +103,7 @@ public class VentaService {
                 descuentoGlobal = BigDecimal.ZERO;
             }
 
-        List<DetalleVentaRequest> detalles = request.getDetalleVentasList();
+        List<DetalleVentaRequest> detalles = request.getDetallesVentasList();
 
         for(DetalleVentaRequest detalle : detalles){
             
@@ -217,6 +221,25 @@ public class VentaService {
 
     public List<VentaResponse> mostrarVentas(){
         return mapper.toResponseList(repository.findAll());
+    }
+
+    public VentaResponse obtenerVentaConDetalle(Integer idVenta){
+        Ventas encontrada = repository.findById(idVenta)
+            .orElseThrow(()-> new RecursoNoEncontradoException(idVenta + " Venta no encontrada"));
+        
+        VentaResponse venta = mapper.toResponse(encontrada);
+        venta.setDetallesVentasList(dVentaService.obtenerDetalleVenta(idVenta));
+        return venta;
+    }
+
+    public Page<VentaResponse> listarVentaCliente(Integer idCliente, int page, int size){
+         if (page < 0) page = 0;
+        Page<Ventas> paginaVenta = repository.findByIdCliente_IdEntidadOrderByFechaEmisionDesc(
+                idCliente, 
+                PageRequest.of(page, size)
+        );
+
+        return paginaVenta.map(mapper::toResponse);
     }
 
 }
